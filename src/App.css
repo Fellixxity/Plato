@@ -653,3 +653,42 @@ header {
   padding: 2rem;
   font-size: 0.95rem;
 }
+
+/* Ingredient Tags */
+.ingredient-tags {
+  margin-top: 1rem;
+}
+
+.tags-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ingredient-tag {
+  background-color: #f1f8e9;
+  border: 1px solid #c8e6c9;
+  color: #2e7d32;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ingredient-tag:hover {
+  background-color: #e8f5e9;
+  border-color: #81c784;
+  transform: translateY(-1px);
+}
+
+.ingredient-tag:active {
+  transform: translateY(0);
+}

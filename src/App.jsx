@@ -278,6 +278,28 @@ function App() {
             value={inventory}
             onChange={(e) => setInventory(e.target.value)}
           />
+          <div className="ingredient-tags">
+            <span className="tags-label">よく使う食材:</span>
+            <div className="tags-list">
+              {[
+                '鶏肉', '豚肉', '合い挽き肉', '鮭', 'ツナ缶',
+                '玉ねぎ', '人参', 'じゃがいも', 'キャベツ', 'トマト', 'ブロッコリー', 'ピーマン', 'きのこ',
+                '卵', '豆腐', '納豆', '牛乳', 'チーズ', 'うどん', 'パスタ', '冷凍ごはん'
+              ].map(ing => (
+                <button
+                  key={ing}
+                  className="ingredient-tag"
+                  onClick={() => {
+                    const current = inventory.trim()
+                    const newItem = current ? (current.endsWith('、') ? ing : `、${ing}`) : ing
+                    setInventory(current + newItem)
+                  }}
+                >
+                  {ing}
+                </button>
+              ))}
+            </div>
+          </div>
           <button
             className="generate-btn"
             onClick={handleGenerate}
