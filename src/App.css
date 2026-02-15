@@ -692,3 +692,38 @@ header {
 .ingredient-tag:active {
   transform: translateY(0);
 }
+
+/* UI Visibility Improvements */
+.meal-slot.has-content .meal-content-display {
+  background-color: #fff9c4;
+  /* Shallow Yellow/Cream */
+  border-color: #fbc02d;
+  color: #333;
+  font-weight: 500;
+}
+
+.meal-slot.skipped .meal-content-display {
+  background-color: #e0e0e0;
+  color: #9e9e9e;
+}
+
+.slot-title-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.favorite-icon-mini {
+  font-size: 0.9rem;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

@@ -326,10 +326,16 @@ function App() {
               {MEAL_TYPES.map((type) => {
                 const slotId = `${day}-${type}`
                 const isSkipped = skippedSlots.includes(slotId)
+                const hasContent = meals[slotId] && (typeof meals[slotId] === 'string' ? meals[slotId] : meals[slotId].name)
+                const isFav = hasContent && typeof meals[slotId] === 'object' && isFavorite(meals[slotId])
+
                 return (
-                  <div key={type} className={`meal-slot ${isSkipped ? 'skipped' : ''}`}>
+                  <div key={type} className={`meal-slot ${isSkipped ? 'skipped' : ''} ${hasContent && !isSkipped ? 'has-content' : ''}`}>
                     <div className="slot-header">
-                      <span>{type}</span>
+                      <div className="slot-title-area">
+                        <span>{type}</span>
+                        {isFav && <span className="favorite-icon-mini" title="お気に入り登録済み">❤️</span>}
+                      </div>
                       <label className="skip-label">
                         <input
                           type="checkbox"
