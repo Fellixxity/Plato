@@ -231,6 +231,16 @@ header {
   transition: var(--transition);
 }
 
+.meal-slot textarea:read-only {
+  background-color: #f8f9fa;
+  cursor: default;
+}
+
+.meal-slot textarea:read-only:focus {
+  border-color: var(--border-color);
+  box-shadow: none;
+}
+
 .meal-slot.skipped label,
 .meal-slot.skipped .slot-header span {
   color: var(--disabled-text);

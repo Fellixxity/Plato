@@ -16,7 +16,7 @@ function App() {
     return saved ? JSON.parse(saved) : {}
   })
   const [isGenerating, setIsGenerating] = useState(false)
-  const [apiKey, setApiKey] = useState(() => {
+  const [apiKey] = useState(() => {
     return localStorage.getItem('gemini-api-key') || import.meta.env.VITE_GEMINI_API_KEY || ''
   })
   const [targetCalories, setTargetCalories] = useState(() => {
@@ -288,9 +288,10 @@ function App() {
                       </label>
                     </div>
                     <textarea
+                      className="meal-content-display"
                       placeholder={isSkipped ? '除外されています' : `${type}のメニュー...`}
                       value={typeof meals[slotId] === 'object' ? meals[slotId]?.name || '' : meals[slotId] || ''}
-                      onChange={(e) => handleMealChange(day, type, e.target.value)}
+                      readOnly
                       disabled={isSkipped}
                     />
                     <div className="slot-actions">
@@ -356,15 +357,6 @@ function App() {
             step="100"
           />
           <span className="unit-label">kcal</span>
-        </div>
-        <div className="setting-item">
-          <label>Gemini APIキー (LocalStorageに保存): </label>
-          <input
-            type="password"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="AIZA..."
-          />
         </div>
       </section>
 
