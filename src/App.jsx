@@ -33,6 +33,11 @@ function App() {
   })
   const [selectedRecipe, setSelectedRecipe] = useState(null)
   const [showRecipeModal, setShowRecipeModal] = useState(false)
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('favorites')
+    return saved ? JSON.parse(saved) : []
+  })
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false)
 
   useEffect(() => {
     localStorage.setItem('meal-plan', JSON.stringify(meals))
@@ -42,7 +47,8 @@ function App() {
     localStorage.setItem('target-calories', targetCalories.toString())
     localStorage.setItem('genre-filters', JSON.stringify(genreFilters))
     localStorage.setItem('meal-style', mealStyle)
-  }, [meals, skippedSlots, inventory, apiKey, targetCalories, genreFilters, mealStyle])
+    localStorage.setItem('favorites', JSON.stringify(favorites))
+  }, [meals, skippedSlots, inventory, apiKey, targetCalories, genreFilters, mealStyle, favorites])
 
   const handleMealChange = (day, type, value) => {
     setMeals(prev => {
@@ -186,10 +192,33 @@ function App() {
     setTimeout(() => setSelectedRecipe(null), 300)
   }
 
+  const isFavorite = (recipe) => {
+    if (!recipe) return false
+    return favorites.some(f => f.name === recipe.name && f.calories === recipe.calories)
+  }
+
+  const toggleFavorite = (recipe) => {
+    if (isFavorite(recipe)) {
+      setFavorites(prev => prev.filter(f => !(f.name === recipe.name && f.calories === recipe.calories)))
+    } else {
+      setFavorites(prev => [...prev, { ...recipe, id: Date.now(), dateAdded: new Date().toISOString() }])
+    }
+  }
+
+  const handleRemoveFavorite = (id) => {
+    setFavorites(prev => prev.filter(f => f.id !== id))
+  }
+
   return (
     <div className="app-container">
       <header>
         <h1>AI献立プランナー</h1>
+        <button
+          className="favorites-btn-header"
+          onClick={() => setShowFavoritesModal(true)}
+        >
+          ❤️ お気に入り ({favorites.length})
+        </button>
       </header>
 
       <section className="genre-filter-section card">
@@ -365,7 +394,16 @@ function App() {
         <div className="modal-overlay" onClick={handleCloseRecipe}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={handleCloseRecipe}>×</button>
-            <h2 className="recipe-title">{selectedRecipe.name}</h2>
+            <div className="modal-header-actions">
+              <h2 className="recipe-title">{selectedRecipe.name}</h2>
+              <button
+                className={`favorite-toggle-btn ${isFavorite(selectedRecipe) ? 'active' : ''}`}
+                onClick={() => toggleFavorite(selectedRecipe)}
+                title={isFavorite(selectedRecipe) ? 'お気に入りから削除' : 'お気に入りに追加'}
+              >
+                {isFavorite(selectedRecipe) ? '❤️ 保存済み' : '🤍 保存する'}
+              </button>
+            </div>
 
             <div className="recipe-meta">
               <span className="meta-item">🔥 {selectedRecipe.calories} kcal</span>
@@ -393,6 +431,42 @@ function App() {
                 ))}
               </ol>
             </div>
+          </div>
+        </div>
+      )}
+      {showFavoritesModal && (
+        <div className="modal-overlay" onClick={() => setShowFavoritesModal(false)}>
+          <div className="modal-content favorites-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowFavoritesModal(false)}>×</button>
+            <h2>❤️ お気に入りレシピ ({favorites.length})</h2>
+
+            {favorites.length === 0 ? (
+              <p className="no-favorites">まだお気に入りがありません。レシピ詳細画面から保存できます。</p>
+            ) : (
+              <div className="favorites-list">
+                {favorites.map(fav => (
+                  <div key={fav.id} className="favorite-item">
+                    <div className="favorite-info" onClick={() => {
+                      setSelectedRecipe(fav)
+                      setShowRecipeModal(true)
+                    }}>
+                      <h3>{fav.name}</h3>
+                      <span>{fav.calories} kcal / {fav.cookingTime}分</span>
+                    </div>
+                    <button
+                      className="remove-favorite-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleRemoveFavorite(fav.id)
+                      }}
+                      title="削除"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

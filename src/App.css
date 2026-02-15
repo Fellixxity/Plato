@@ -538,3 +538,118 @@ header {
   padding: 0.5rem 0;
   line-height: 1.6;
 }
+
+/* Favorites */
+.favorites-btn-header {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+}
+
+.favorites-btn-header:hover {
+  background-color: #e8f5e9;
+}
+
+.modal-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-right: 2rem;
+}
+
+.favorite-toggle-btn {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.favorite-toggle-btn.active {
+  background-color: #ffebee;
+  border-color: #ff4081;
+  color: #ff4081;
+}
+
+.favorites-modal {
+  max-width: 600px;
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.favorite-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.favorite-item:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.favorite-info {
+  flex: 1;
+  cursor: pointer;
+}
+
+.favorite-info h3 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1rem;
+  color: var(--text-main);
+}
+
+.favorite-info span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.remove-favorite-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.remove-favorite-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: #f44336;
+}
+
+.no-favorites {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem;
+  font-size: 0.95rem;
+}
