@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // 注意: 本来はバックエンドで秘匿すべきですが、今回はデモ用にクライアントサイドで実装します。
 // ユーザーが自分のAPIキーを設定できるようにUIを追加するのも一案です。
 
-export async function generateMenu(inventory, schedule, apiKey, modelName = "gemini-2.5-flash", genreFilters = null, mealStyle = 'バランス') {
+export async function generateMenu(inventory, schedule, apiKey, modelName = "gemini-2.5-flash", genreFilters = null, mealStyle = 'バランス', targetCalories = 2000) {
   if (!apiKey) {
     throw new Error("Gemini APIキーが設定されていません。");
   }
@@ -33,8 +33,12 @@ ${genreFilters.excluded.length > 0 ? `除外ジャンル: ${genreFilters.exclude
     : '';
 
   const prompt = `
-あなたは優秀な料理研究家です。
+你是優秀な料理研究家です。
 以下の食材リストを使用して、指定されたスケジュールの献立を提案してください。
+
+【目標設定】
+1日の目標摂取カロリー: 約${targetCalories}kcal
+※この目標カロリーに基づき、3食（朝・昼・夕）のカロリー配分を適切に調整してください。
 
 食材リスト:
 ${inventory}

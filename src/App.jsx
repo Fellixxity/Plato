@@ -21,7 +21,7 @@ function App() {
   })
   const [targetCalories, setTargetCalories] = useState(() => {
     const saved = localStorage.getItem('target-calories')
-    return saved ? parseInt(saved) : 2000
+    return saved ? saved : '2000'
   })
   const [genreFilters, setGenreFilters] = useState(() => {
     const saved = localStorage.getItem('genre-filters')
@@ -119,7 +119,8 @@ function App() {
       // ここでは service 側に渡すか、あるいは service をクロージャにする
       // 今回は簡易的に service 内で localStorage を見るように修正するか、引数で渡す。
       // (ここでは geminiService を使用)
-      const results = await generateMenu(inventory, schedule, apiKey, 'gemini-2.5-flash', genreFilters, mealStyle)
+      // (ここでは geminiService を使用)
+      const results = await generateMenu(inventory, schedule, apiKey, 'gemini-2.5-flash', genreFilters, mealStyle, parseInt(targetCalories) || 2000)
       setMeals(prev => ({ ...prev, ...results }))
     } catch (error) {
       alert('エラーが発生しました: ' + error.message)
@@ -142,7 +143,7 @@ function App() {
     try {
       const slotId = `${day}-${type}`
       const schedule = [slotId]
-      const results = await generateMenu(inventory, schedule, apiKey, 'gemini-2.5-flash', genreFilters, mealStyle)
+      const results = await generateMenu(inventory, schedule, apiKey, 'gemini-2.5-flash', genreFilters, mealStyle, parseInt(targetCalories) || 2000)
       setMeals(prev => ({ ...prev, ...results }))
     } catch (error) {
       alert('エラーが発生しました: ' + error.message)
@@ -351,7 +352,7 @@ function App() {
           <input
             type="number"
             value={targetCalories}
-            onChange={(e) => setTargetCalories(parseInt(e.target.value) || 2000)}
+            onChange={(e) => setTargetCalories(e.target.value)}
             min="500"
             max="5000"
             step="100"
