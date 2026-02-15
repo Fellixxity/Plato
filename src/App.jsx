@@ -224,7 +224,7 @@ function App() {
       <section className="genre-filter-section card">
         <h2>🍜 ジャンル設定</h2>
         <div className="genre-filters">
-          {['和食', '洋食', '中華', 'エスニック'].map(genre => (
+          {['和食', '洋食', '中華', 'エスニック', 'おつまみ'].map(genre => (
             <div key={genre} className="genre-item">
               <span className="genre-name">{genre}</span>
               <div className="genre-buttons">

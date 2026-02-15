@@ -32,6 +32,17 @@ ${genreFilters.excluded.length > 0 ? `除外ジャンル: ${genreFilters.exclude
     ? `\n【食事スタイル】\n${mealStyleInstructions[mealStyle]}\n`
     : '';
 
+  const snackInstructions = isSnack
+    ? `
+【重要：おつまみモード】
+ユーザーは「定食形式（ご飯・汁物・主菜）」ではなく、「お酒に合う数品のおつまみセット」を求めています。
+以下の点を必ず守ってください：
+1. ご飯や味噌汁などの主食・汁物は提案しないでください。
+2. お酒（ビール、焼酎、ワインなど）に合うおつまみ（小鉢、揚げ物、焼き物など）を2〜3品、1つのメニューとして提案してください。
+3. メニュー名（name）は「晩酌セット（枝豆、唐揚げ、冷奴）」のように、内容がわかるようにしてください。
+`
+    : '';
+
   const prompt = `
 你是優秀な料理研究家です。
 以下の食材リストを使用して、指定されたスケジュールの献立を提案してください。
@@ -45,7 +56,7 @@ ${inventory}
 
 スケジュール (除外された日は提案不要):
 ${JSON.stringify(schedule, null, 2)}
-${genreSection}${styleSection}
+${genreSection}${styleSection}${snackInstructions}
 出力は以下のJSON形式のみで返してください。余計な解説は不要です。
 {
   "results": {
