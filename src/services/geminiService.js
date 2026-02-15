@@ -19,6 +19,8 @@ ${genreFilters.excluded.length > 0 ? `除外ジャンル: ${genreFilters.exclude
 `
     : '';
 
+  const isSnack = genreFilters && genreFilters.preferred.includes('おつまみ');
+
   const mealStyleInstructions = {
     'がっつり': 'ボリューム多め、満足感重視、カロリー高め（1食あたり700-900kcal程度）の献立を提案してください。',
     'ダイエット': '低カロリー（1食あたり300-500kcal程度）、野菜多め、脂質控えめのヘルシーな献立を提案してください。',
