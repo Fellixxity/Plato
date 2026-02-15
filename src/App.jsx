@@ -445,7 +445,8 @@ function App() {
               <ul className="ingredients-list">
                 {selectedRecipe.ingredients?.map((ing, idx) => (
                   <li key={idx}>
-                    {ing.name}: {ing.amount}{ing.unit}
+                    <span className="ing-name">{ing.name}</span>
+                    <span className="ing-amount">{ing.amount}{ing.unit}</span>
                   </li>
                 ))}
               </ul>
