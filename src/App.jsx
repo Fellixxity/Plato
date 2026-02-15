@@ -476,6 +476,7 @@ function App() {
                   <div key={fav.id} className="favorite-item">
                     <div className="favorite-info" onClick={() => {
                       setSelectedRecipe(fav)
+                      setShowFavoritesModal(false)
                       setShowRecipeModal(true)
                     }}>
                       <h3>{fav.name}</h3>
